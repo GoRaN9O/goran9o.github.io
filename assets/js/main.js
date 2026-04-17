@@ -131,6 +131,20 @@
   }
   headerToggleBtn.addEventListener('click', headerToggle);
 
+  document.addEventListener('click', function(e) {
+    if (window.innerWidth < 1200) {
+      const header = document.querySelector('#header');
+      const headerToggle = document.querySelector('.header-toggle');
+      const overlay = document.querySelector('#mobile-nav-overlay');
+      if (header.classList.contains('header-show') && !header.contains(e.target) && !headerToggle.contains(e.target)) {
+        headerToggle();
+      }
+      if (overlay && overlay === e.target) {
+        headerToggle();
+      }
+    }
+  });
+
   /**
    * Hide mobile nav on same-page/hash links
    */

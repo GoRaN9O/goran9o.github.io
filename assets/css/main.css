@@ -1,3 +1,7 @@
+/*--------------------------------------------------------------
+# Font & Color Variables
+# Help: https://bootstrapmade.com/color-system/
+--------------------------------------------------------------*/
 /* Fonts */
 :root {
   --default-font: "Zain", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -443,6 +447,24 @@ h6 {
     right: -100%;
     left: auto;
     padding-top: 90px;
+  }
+
+  .mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  body.header-show .mobile-nav-overlay {
+    display: block;
+    opacity: 1;
   }
 
   body.header-show .header-top-center,
