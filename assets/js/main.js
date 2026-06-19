@@ -2,156 +2,39 @@
   "use strict";
 
   /**
-   * Theme Toggle (Dark/Light Mode)
+   * Apply .scrolled class to the body as the page is scrolled down
    */
-  const themeToggleBtn = document.querySelector('.theme-toggle-btn');
-  const themeToggleSticky = document.querySelector('.theme-toggle-sticky');
-  const headerThemeToggle = document.querySelector('.header-theme-toggle');
-  const themeToggleOriginal = document.querySelector('#theme-toggle');
-  const themeToggleTop = document.querySelector('#theme-toggle-top');
-  
-  function toggleTheme() {
-    document.body.classList.add('theme-transition');
-    
-    document.body.classList.toggle('dark-mode');
-    
-    const icon = document.querySelector('.theme-toggle-btn i');
-    const stickyIcon = document.querySelector('.theme-toggle-sticky i');
-    const headerIcon = document.querySelector('.header-theme-toggle i');
-    const originalIcon = document.querySelector('#theme-toggle i');
-    const topIcon = document.querySelector('#theme-toggle-top i');
-    if (document.body.classList.contains('dark-mode')) {
-      if (icon) {
-        icon.classList.remove('bi-moon-stars');
-        icon.classList.add('bi-sun');
-      }
-      if (stickyIcon) {
-        stickyIcon.classList.remove('bi-moon-stars');
-        stickyIcon.classList.add('bi-sun');
-      }
-      if (headerIcon) {
-        headerIcon.classList.remove('bi-moon-stars');
-        headerIcon.classList.add('bi-sun');
-      }
-      if (originalIcon) {
-        originalIcon.classList.remove('bi-moon-stars');
-        originalIcon.classList.add('bi-sun');
-      }
-      if (topIcon) {
-        topIcon.classList.remove('bi-moon-stars');
-        topIcon.classList.add('bi-sun');
-      }
-    } else {
-      if (icon) {
-        icon.classList.remove('bi-sun');
-        icon.classList.add('bi-moon-stars');
-      }
-      if (stickyIcon) {
-        stickyIcon.classList.remove('bi-sun');
-        stickyIcon.classList.add('bi-moon-stars');
-      }
-      if (headerIcon) {
-        headerIcon.classList.remove('bi-sun');
-        headerIcon.classList.add('bi-moon-stars');
-      }
-      if (originalIcon) {
-        originalIcon.classList.remove('bi-sun');
-        originalIcon.classList.add('bi-moon-stars');
-      }
-      if (topIcon) {
-        topIcon.classList.remove('bi-sun');
-        topIcon.classList.add('bi-moon-stars');
-      }
-    }
-    
-    localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-    
-    setTimeout(() => {
-      document.body.classList.remove('theme-transition');
-    }, 300);
-  }
-  
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', toggleTheme);
-  }
-  
-  if (themeToggleSticky) {
-    themeToggleSticky.addEventListener('click', toggleTheme);
-  }
-  
-  if (headerThemeToggle) {
-    headerThemeToggle.addEventListener('click', toggleTheme);
-  }
-  
-  if (themeToggleOriginal) {
-    themeToggleOriginal.addEventListener('click', toggleTheme);
+  function toggleScrolled() {
+    const selectBody = document.querySelector('body');
+    const selectHeader = document.querySelector('#header');
+    if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
+    window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
   }
 
-  if (themeToggleTop) {
-    themeToggleTop.addEventListener('click', toggleTheme);
-  }
+  document.addEventListener('scroll', toggleScrolled);
+  window.addEventListener('load', toggleScrolled);
 
   /**
-   * Load saved theme preference
+   * Mobile nav toggle
    */
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    document.body.classList.add('dark-mode');
-    const icon = themeToggleBtn?.querySelector('i');
-    const topIcon = themeToggleTop?.querySelector('i');
-    const headerIcon = headerThemeToggle?.querySelector('i');
-    const originalIcon = themeToggleOriginal?.querySelector('i');
-    if (icon) {
-      icon.classList.remove('bi-moon-stars');
-      icon.classList.add('bi-sun');
-    }
-    if (topIcon) {
-      topIcon.classList.remove('bi-moon-stars');
-      topIcon.classList.add('bi-sun');
-    }
-    if (headerIcon) {
-      headerIcon.classList.remove('bi-moon-stars');
-      headerIcon.classList.add('bi-sun');
-    }
-    if (originalIcon) {
-      originalIcon.classList.remove('bi-moon-stars');
-      originalIcon.classList.add('bi-sun');
-    }
+  const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+
+  function mobileNavToogle() {
+    document.querySelector('body').classList.toggle('mobile-nav-active');
+    mobileNavToggleBtn.classList.toggle('bi-list');
+    mobileNavToggleBtn.classList.toggle('bi-x');
   }
-
-  /**
-   * Header toggle
-   */
-  const headerToggleBtn = document.querySelector('.header-toggle');
-
-  function headerToggle() {
-    document.querySelector('#header').classList.toggle('header-show');
-    headerToggleBtn.classList.toggle('bi-list');
-    headerToggleBtn.classList.toggle('bi-x');
+  if (mobileNavToggleBtn) {
+    mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
   }
-  headerToggleBtn.addEventListener('click', headerToggle);
-
-  document.addEventListener('click', function(e) {
-    if (window.innerWidth < 1200) {
-      const header = document.querySelector('#header');
-      const headerToggle = document.querySelector('.header-toggle');
-      const overlay = document.querySelector('#mobile-nav-overlay');
-      if (header.classList.contains('header-show') && !header.contains(e.target) && !headerToggle.contains(e.target)) {
-        headerToggle();
-      }
-      if (overlay && overlay === e.target) {
-        headerToggle();
-      }
-    }
-  });
 
   /**
    * Hide mobile nav on same-page/hash links
    */
   document.querySelectorAll('#navmenu a').forEach(navmenu => {
     navmenu.addEventListener('click', () => {
-      if (document.querySelector('.header-show')) {
-        headerToggle();
+      if (document.querySelector('.mobile-nav-active')) {
+        mobileNavToogle();
       }
     });
 
@@ -168,16 +51,6 @@
       e.stopImmediatePropagation();
     });
   });
-
-  /**
-   * Preloader
-   */
-  const preloader = document.querySelector('#preloader');
-  if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove();
-    });
-  }
 
   /**
    * Scroll top button
@@ -205,14 +78,18 @@
    */
   function aosInit() {
     AOS.init({
-      duration: 400,
-      easing: 'ease',
+      duration: 600,
+      easing: 'ease-in-out',
       once: true,
-      mirror: false,
-      offset: 120
+      mirror: false
     });
   }
   window.addEventListener('load', aosInit);
+
+  /**
+   * Initiate Pure Counter
+   */
+  new PureCounter();
 
   /**
    * Init typed.js
@@ -231,11 +108,6 @@
   }
 
   /**
-   * Initiate Pure Counter
-   */
-  new PureCounter();
-
-  /**
    * Animate the skills items on reveal
    */
   let skillsAnimation = document.querySelectorAll('.skills-animation');
@@ -246,20 +118,7 @@
       handler: function(direction) {
         let progress = item.querySelectorAll('.progress .progress-bar');
         progress.forEach(el => {
-          let value = el.getAttribute('aria-valuenow');
-          el.style.width = value + '%';
-          
-          let percent = parseInt(value);
-          let color;
-          if (percent >= 100) color = '#059652';
-          else if (percent >= 90) color = '#20c997';
-          else if (percent >= 80) color = '#0dcaf0';
-          else if (percent >= 70) color = '#0d6efd';
-          else if (percent >= 60) color = '#6610f2';
-          else if (percent >= 50) color = '#d63384';
-          else color = '#dc3545';
-          
-          el.style.backgroundColor = color;
+          el.style.width = el.getAttribute('aria-valuenow') + '%';
         });
       }
     });
@@ -325,6 +184,15 @@
   window.addEventListener("load", initSwiper);
 
   /**
+   * Frequently Asked Questions Toggle
+   */
+  document.querySelectorAll('.faq-item h3, .faq-item .faq-toggle, .faq-item .faq-header').forEach((faqItem) => {
+    faqItem.addEventListener('click', () => {
+      faqItem.parentNode.classList.toggle('faq-active');
+    });
+  });
+
+  /**
    * Correct scrolling position upon page load for URLs containing hash links.
    */
   window.addEventListener('load', function(e) {
@@ -363,5 +231,31 @@
   }
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
+
+  /**
+   * Theme Toggle (Dark Mode)
+   */
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  
+  function getThemePreference() {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) return storedTheme;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }
+  
+  if (themeToggleBtn) {
+    setTheme(getThemePreference());
+    
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+    });
+  }
 
 })();
