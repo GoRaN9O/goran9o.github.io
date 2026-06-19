@@ -1,3 +1,3 @@
 ### My Personal Site
 
-# https://goran9o.github.io/index
+# https://goran9o.github.io
