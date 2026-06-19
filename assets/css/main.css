@@ -335,12 +335,13 @@ h6 {
 }
 
 .mobile-nav-toggle.bi-x {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  box-shadow: 0 4px 15px rgba(31, 41, 55, 0.4);
 }
 
 .mobile-nav-toggle.bi-x:hover {
-  box-shadow: 0 6px 25px rgba(239, 68, 68, 0.6);
+  box-shadow: 0 6px 25px rgba(31, 41, 55, 0.6);
+  transform: scale(1.1) rotate(90deg);
 }
 
 [data-theme="dark"] .mobile-nav-toggle {
@@ -353,32 +354,8 @@ h6 {
   box-shadow: 0 6px 25px rgba(245, 245, 244, 0.6);
 }
 
-.mobile-nav-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 44px;
-  height: 44px;
-  font-size: 22px;
-  line-height: 44px;
-  text-align: center;
-  cursor: pointer;
-  z-index: 999;
-  transition: all 0.2s ease;
-  color: var(--default-color);
-  background: transparent;
-  border: none;
-  border-radius: 0 0 0 12px;
-  opacity: 0.7;
-}
-
-.mobile-nav-close:hover {
-  opacity: 1;
-  background: color-mix(in srgb, var(--default-color), transparent 90%);
-}
-
-[data-theme="dark"] .mobile-nav-close {
-  color: var(--default-color);
+[data-theme="dark"] .mobile-nav-toggle.bi-x:hover {
+  transform: scale(1.1) rotate(90deg);
 }
 
 .navmenu {
@@ -389,7 +366,7 @@ h6 {
   z-index: 997;
   transition: 0.3s;
   width: 300px;
-  overflow-y: auto;
+  overflow: hidden;
   background-color: var(--nav-mobile-background-color);
 }
 
@@ -542,8 +519,11 @@ h6 {
 }
 
 .mobile-nav-active .mobile-nav-toggle {
-  opacity: 0;
-  pointer-events: none;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 20px;
+  z-index: 999;
 }
 
 .mobile-nav-active .navmenu {
@@ -552,6 +532,7 @@ h6 {
   top: 0;
   bottom: 0;
   right: 0;
+  padding-top: 60px;
   background-color: var(--nav-mobile-background-color);
   transition: 0.3s;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
@@ -857,21 +838,21 @@ section,
   color: var(--default-color);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
   .hero .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 }
 
 @media (max-width: 576px) {
   .hero .hero-title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
 }
 
 @media (max-width: 400px) {
   .hero .hero-title {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 }
 
