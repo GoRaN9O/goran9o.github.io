@@ -28,6 +28,11 @@
     mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
   }
 
+  const mobileNavCloseBtn = document.querySelector('.mobile-nav-close');
+  if (mobileNavCloseBtn) {
+    mobileNavCloseBtn.addEventListener('click', mobileNavToogle);
+  }
+
   /**
    * Hide mobile nav on same-page/hash links
    */
